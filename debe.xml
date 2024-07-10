@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>Amazon Türkiye Fırsatları</title>
+    <link>https://github.com/avsessisozx/amazon_f-rsat</link>
+    <description>Amazon Türkiye fırsatlarının listesi</description>
+    <item>
+      <title>Örnek Başlık</title>
+      <link>https://www.amazon.com.tr/dp/ürün_kodu</link>
+      <description>Örnek açıklama</description>
+    </item>
+    <!-- Daha fazla item ekleyin -->
+  </channel>
+</rss>
