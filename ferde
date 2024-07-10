@@ -1,0 +1,41 @@
+import requests
+from bs4 import BeautifulSoup
+from feedgen.feed import FeedGenerator
+
+# URL of the webpage to parse
+url = 'https://forum.donanimhaber.com/amazon-turkiye-firsatlari-sadece-link-paylasimi-sohbet-yasak--135759219'
+
+# Fetch the webpage content
+response = requests.get(url)
+soup = BeautifulSoup(response.content, 'html.parser')
+
+# Create a FeedGenerator object
+fg = FeedGenerator()
+fg.id(url)
+fg.title('Amazon Türkiye Fırsatları')
+fg.link(href=url)
+fg.language('tr')
+
+# Parse the webpage and add entries to the RSS feed
+for post in soup.find_all('div', class_='guncelIcerik'):
+    title_tag = post.find('a')
+    if title_tag:
+        title = title_tag.text.strip()
+        link = title_tag['href']
+        description = post.find('div', class_='entry').text.strip() if post.find('div', class_='entry') else 'No description available'
+
+        fe = fg.add_entry()
+        fe.id(link)
+        fe.title(title)
+        fe.link(href=link)
+        fe.description(description)
+
+# Generate the RSS feed
+rss_feed = fg.rss_str(pretty=True)
+rss_feed = rss_feed.decode('utf-8')
+
+# Save the RSS feed to a file
+with open('debe.xml', 'w', encoding='utf-8') as f:
+    f.write(rss_feed)
+
+print('RSS feed generated successfully!')
